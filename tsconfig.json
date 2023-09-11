@@ -14,8 +14,9 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": ".", // tsconfig.jsonがあるディレクトリ = ここではプロジェクトディレクトリを指す
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],  // pathsを指定することで、読み込みたいファイルの相対パスの起点が、import文を書くファイルではなく、srcディレクトリになった
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

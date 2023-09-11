@@ -1,5 +1,6 @@
-import Image from 'next/image'
 import { Inter } from 'next/font/google'
+import Image from 'next/image'
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -42,6 +43,13 @@ export default function Home() {
           height={37}
           priority
         />
+      </div>
+
+      <div>
+        <h1 className="title">
+          Read <Link href="/posts/first-post">this page!</Link>
+          {/* Read <a href="/posts/first-post">this page!</a> */}
+        </h1>
       </div>
 
       <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
