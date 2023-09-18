@@ -9,3 +9,10 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Event {
+  id               Int      @id @default(autoincrement())
+  startDateTime    DateTime @db.Timestamptz(3)
+  endDateTime      DateTime @db.Timestamptz(3)
+  participantCount Int
+}
