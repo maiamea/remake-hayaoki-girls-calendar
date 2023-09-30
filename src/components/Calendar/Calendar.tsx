@@ -8,9 +8,17 @@ import timeGridPlugin from "@fullcalendar/timegrid"
 //日本語対応
 import jaLocale from "@fullcalendar/core/locales/ja"
 
+import Router from 'next/router'
+
 export const MyCalendar = (props: any) => {
   const events = props.events
   console.log('My Calendar', { events })
+
+  function onClick(info: any) {
+    alert(`Clicked! ${info.event.title}`)
+    console.log({info})
+    Router.push("/form")
+  }
 
   return (
     <>
@@ -33,6 +41,7 @@ export const MyCalendar = (props: any) => {
         }}
         locale={jaLocale}
         events={events}
+        eventClick={onClick}
       />
     </>
 
