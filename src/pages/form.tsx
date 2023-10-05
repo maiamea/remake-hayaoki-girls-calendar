@@ -1,4 +1,3 @@
-import { FormEventHandler } from "react";
 import { PrismaClient } from '@prisma/client';
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -22,9 +21,9 @@ type FormPageProps = {
   title: string
 }
 
-export const getServerSideProps = async ({ req }: any) => {
-  const event = await prisma.event.findUnique({
-    where: { id: 1 }
+export const getServerSideProps = async ({ req, query }: any) => {
+  const event = await prisma.event.findFirst({
+    where: { startDateTime: query.start } // ISO-8601形式の文字列 YYYY-MM-DDTHH:mm:ss+09:00
   })
 
   // データがなければ404を返す
@@ -46,19 +45,17 @@ export const getServerSideProps = async ({ req }: any) => {
   return { props: convertedEvent }
 }
 
-const handleSubmit = ({ event }: any) => {
-  event.preventDefault()
-}
 
 export default function Form(convertedEvent: FormPageProps) {
   const startStr = dayjs(convertedEvent.start).format('YYYY年M月D日(ddd) HH:mm')
   const endTimeStr = dayjs(convertedEvent.end).format('HH:mm')
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form method="post" action="/api/count-up">
       <h1>参加フォーム</h1>
       <p>【日時】{startStr}〜{endTimeStr}</p>
-      <input type="hidden" name="date" />
+      <input type="hidden" name="date" value={convertedEvent.start} />
+      <input type="hidden" name="participant" value={convertedEvent.participantCount} />
       <input type="submit" value="参加" />
     </form>
   )

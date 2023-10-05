@@ -21,7 +21,7 @@ export const getServerSideProps = async ({ req }: any) => {
   const events = await prisma.event.findMany({})
   const convertedEvents = []
   for (const event of events) {
-    // 開始時刻、終了時刻をUTCからJSTに変換する
+    // 開始時刻、終了時刻をUTCからJSTに変換する (ISO-8601形式)
     const start = dayjs(event.startDateTime).tz().format()
     const end = dayjs(event.endDateTime).tz().format()
     const convertedEvent = {

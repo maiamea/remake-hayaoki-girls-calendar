@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import FullCalendar from '@fullcalendar/react'
 // FullCalendarで月表示を可能にするプラグイン。
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -12,12 +12,12 @@ import Router from 'next/router'
 
 export const MyCalendar = (props: any) => {
   const events = props.events
-  console.log('My Calendar', { events })
 
   function onClick(info: any) {
-    alert(`Clicked! ${info.event.title}`)
-    console.log({info})
-    Router.push("/form")
+    Router.push({
+      pathname:"/form",
+      query: {start: info.event.start.toISOString()} // ISO-8601形式の文字列 YYYY-MM-DDTHH:mm:ss+09:00
+    })
   }
 
   return (
