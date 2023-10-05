@@ -41,5 +41,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const countedUpParticipant = parseInt(data.participant, 10) + 1
   // DB更新
   await updateData(data, countedUpParticipant)
-  res.redirect(307, '/events')
+  res.redirect(307, '/')
 }
