@@ -26,9 +26,17 @@ export const getServerSideProps = async ({ req, query }: any) => {
     where: { startDateTime: query.start } // ISO-8601形式の文字列 YYYY-MM-DDTHH:mm:ss+09:00
   })
 
-  // データがなければ404を返す
+  // データがなければダミーデータを返す
   if (!event) {
-    return { notFound: true };
+    const dummyEndStr = dayjs(query.start).add(10, 'm').format()
+    const dummyProps: FormPageProps = {
+      id: -1,
+      start: query.start,
+      end: dummyEndStr,
+      participantCount: 0,
+      title: '' // フォーム画面に表示しないので空文字にしとく
+    }
+    return {props: dummyProps}
   }
 
   // 開始時刻、終了時刻をUTCからJSTに変換する

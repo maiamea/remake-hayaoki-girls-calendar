@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '@prisma/client'
+import dayjs from 'dayjs';
 
 
 type Data = {
@@ -16,14 +17,21 @@ async function updateData(data: any, numOfParticipant: number) {
     where: { startDateTime: data.date },
   })
 
-  if (!event) {
-    throw new Error('Function Error: updateData')
+  if (event) {
+    await prisma.event.update({
+      where: { id: event.id },
+      data: { participantCount: numOfParticipant },
+    })
+  } else {
+    const newEvent = await prisma.event.create({
+      data: {
+        startDateTime: data.date,
+        endDateTime: dayjs(data.date).add(10, 'm').format(),
+        participantCount: 1
+      }
+    })
   }
 
-  await prisma.event.update({
-    where: { id: event.id },
-    data: { participantCount: numOfParticipant },
-  })
 }
 
 
