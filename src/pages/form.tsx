@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import 'dayjs/locale/ja'
+import { PrimaryButton } from '@/components/Button/PrimaryButton';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -36,7 +37,7 @@ export const getServerSideProps = async ({ req, query }: any) => {
       participantCount: 0,
       title: '' // フォーム画面に表示しないので空文字にしとく
     }
-    return {props: dummyProps}
+    return { props: dummyProps }
   }
 
   // 開始時刻、終了時刻をUTCからJSTに変換する
@@ -55,16 +56,32 @@ export const getServerSideProps = async ({ req, query }: any) => {
 
 
 export default function Form(convertedEvent: FormPageProps) {
-  const startStr = dayjs(convertedEvent.start).format('YYYY年M月D日(ddd) HH:mm')
+  const startStr = dayjs(convertedEvent.start).format('M月D日(ddd) HH:mm')
   const endTimeStr = dayjs(convertedEvent.end).format('HH:mm')
 
   return (
-    <form method="post" action="/api/count-up">
-      <h1>参加フォーム</h1>
-      <p>【日時】{startStr}〜{endTimeStr}</p>
-      <input type="hidden" name="date" value={convertedEvent.start} />
-      <input type="hidden" name="participant" value={convertedEvent.participantCount} />
-      <input type="submit" value="参加" />
-    </form>
+    <div className="prose max-w-none w-screen min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="w-full max-w-md mx-auto p-6">
+        <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
+          <div className="p-4 sm:p-7">
+            <div className="">
+              <form method="post" action="/api/count-up">
+                <div>
+                  <h1 className="text-xl font-normal  text-center text-gray-600">参加申し込み</h1>
+                </div>
+                <div className="py-3 px-4">
+                  <p className="mt-1 font-bold text-xl text-center">{startStr}〜{endTimeStr}</p>
+                </div>
+                <input type="hidden" name="date" value={convertedEvent.start} />
+                <input type="hidden" name="participant" value={convertedEvent.participantCount} />
+                <div className="text-center">
+                  <PrimaryButton type="submit">参加する</PrimaryButton>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

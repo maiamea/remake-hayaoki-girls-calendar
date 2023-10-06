@@ -42,6 +42,8 @@ export const MyCalendar = (props: any) => {
         locale={jaLocale}
         events={events}
         eventClick={onClick}
+        contentHeight="auto"
+        showNonCurrentDates={false}
       />
     </>
 

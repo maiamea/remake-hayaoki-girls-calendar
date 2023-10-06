@@ -16,7 +16,7 @@ const prisma = new PrismaClient();
 
 // サーバー側だけで実行される
 export const getServerSideProps = async ({ req }: any) => {
-  console.log('getServerSideProps')
+  // console.log('getServerSideProps')
   const convertedEvents = []
 
 
@@ -41,7 +41,7 @@ export const getServerSideProps = async ({ req }: any) => {
   // 1ヶ月分のダミーデータ追加
   // TODO: 現在の日時を取得
   const today = dayjs(new Date())
-  console.log(today)
+  // console.log(today)
   for (let additionalDay = 0; additionalDay <= 90; additionalDay++) {
 
     // 1日分のダミーデータ追加
@@ -72,8 +72,8 @@ export const getServerSideProps = async ({ req }: any) => {
 
 // サーバーとクライアントの両方で動くコード
 export default function EventsPage({ convertedEvents }: any) {
-  console.log('Events Page', new Date().getTime())
-  console.log(JSON.stringify({ convertedEvents }, null, 2))
+  // console.log('Events Page', new Date().getTime())
+  // console.log(JSON.stringify({ convertedEvents }, null, 2))
   return (
     <>
       <MyCalendar events={convertedEvents} />
