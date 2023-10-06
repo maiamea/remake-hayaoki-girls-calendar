@@ -1,18 +1,17 @@
-import { PrismaClient } from '@prisma/client';
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
+import { PrismaClient } from '@prisma/client'
+import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 import 'dayjs/locale/ja'
-import { PrimaryButton } from '@/components/Button/PrimaryButton';
+import { PrimaryButton } from '@/components/Button/PrimaryButton'
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.tz.setDefault("Asia/Tokyo");
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.tz.setDefault('Asia/Tokyo')
 dayjs.locale('ja')
 
-
 // Prismaのインスタンスを作成
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 type FormPageProps = {
   id: number
@@ -24,7 +23,7 @@ type FormPageProps = {
 
 export const getServerSideProps = async ({ req, query }: any) => {
   const event = await prisma.event.findFirst({
-    where: { startDateTime: query.start } // ISO-8601形式の文字列 YYYY-MM-DDTHH:mm:ss+09:00
+    where: { startDateTime: query.start }, // ISO-8601形式の文字列 YYYY-MM-DDTHH:mm:ss+09:00
   })
 
   // データがなければダミーデータを返す
@@ -35,7 +34,7 @@ export const getServerSideProps = async ({ req, query }: any) => {
       start: query.start,
       end: dummyEndStr,
       participantCount: 0,
-      title: '' // フォーム画面に表示しないので空文字にしとく
+      title: '', // フォーム画面に表示しないので空文字にしとく
     }
     return { props: dummyProps }
   }
@@ -48,12 +47,11 @@ export const getServerSideProps = async ({ req, query }: any) => {
     start: start,
     end: end,
     participantCount: event.participantCount,
-    title: `${event.participantCount}人`
+    title: `${event.participantCount}人`,
   }
 
   return { props: convertedEvent }
 }
-
 
 export default function Form(convertedEvent: FormPageProps) {
   const startStr = dayjs(convertedEvent.start).format('M月D日(ddd) HH:mm')
@@ -67,13 +65,21 @@ export default function Form(convertedEvent: FormPageProps) {
             <div className="">
               <form method="post" action="/api/count-up">
                 <div>
-                  <h1 className="text-xl font-normal  text-center text-gray-600">参加申し込み</h1>
+                  <h1 className="text-xl font-normal  text-center text-gray-600">
+                    参加申し込み
+                  </h1>
                 </div>
                 <div className="py-3 px-4">
-                  <p className="mt-1 font-bold text-xl text-center">{startStr}〜{endTimeStr}</p>
+                  <p className="mt-1 font-bold text-xl text-center">
+                    {startStr}〜{endTimeStr}
+                  </p>
                 </div>
                 <input type="hidden" name="date" value={convertedEvent.start} />
-                <input type="hidden" name="participant" value={convertedEvent.participantCount} />
+                <input
+                  type="hidden"
+                  name="participant"
+                  value={convertedEvent.participantCount}
+                />
                 <div className="text-center">
                   <PrimaryButton type="submit">参加する</PrimaryButton>
                 </div>

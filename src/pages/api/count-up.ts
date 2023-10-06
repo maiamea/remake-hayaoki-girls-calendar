@@ -1,15 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '@prisma/client'
-import dayjs from 'dayjs';
-
+import dayjs from 'dayjs'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = {
   data: string
 }
 
 // Prismaのインスタンスを作成
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 // DBを更新する
 async function updateData(data: any, numOfParticipant: number) {
@@ -27,15 +26,16 @@ async function updateData(data: any, numOfParticipant: number) {
       data: {
         startDateTime: data.date,
         endDateTime: dayjs(data.date).add(10, 'm').format(),
-        participantCount: 1
-      }
+        participantCount: 1,
+      },
     })
   }
-
 }
 
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>,
+) {
   const data = req.body
   // 参加人数をカウントアップする
   const countedUpParticipant = parseInt(data.participant, 10) + 1
