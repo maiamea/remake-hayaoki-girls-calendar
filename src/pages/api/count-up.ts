@@ -22,7 +22,7 @@ async function updateData(data: any, numOfParticipant: number) {
       data: { participantCount: numOfParticipant },
     })
   } else {
-    const newEvent = await prisma.event.create({
+    await prisma.event.create({
       data: {
         startDateTime: data.date,
         endDateTime: dayjs(data.date).add(10, 'm').format(),

@@ -21,7 +21,7 @@ type FormPageProps = {
   title: string
 }
 
-export const getServerSideProps = async ({ req, query }: any) => {
+export const getServerSideProps = async ({ query }: any) => {
   const event = await prisma.event.findFirst({
     where: { startDateTime: query.start }, // ISO-8601形式の文字列 YYYY-MM-DDTHH:mm:ss+09:00
   })

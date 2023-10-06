@@ -13,7 +13,7 @@ dayjs.tz.setDefault('Asia/Tokyo')
 const prisma = new PrismaClient()
 
 // サーバー側だけで実行される
-export const getServerSideProps = async ({ req }: any) => {
+export const getServerSideProps = async () => {
   // console.log('getServerSideProps')
   const convertedEvents = []
 
