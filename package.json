@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint --dir src",
     "format": "next lint --fix --dir src",
     "migrate": "dotenv -e .env.local -- prisma migrate dev",
     "generate": "dotenv -e .env.local -- prisma generate",
-    "seed": "dotenv -e .env.local -- prisma db seed"
+    "seed": "dotenv -e .env.local -- prisma db seed",
+    "postinstall": "prisma generate"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
