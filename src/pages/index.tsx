@@ -14,10 +14,9 @@ const prisma = new PrismaClient()
 
 // サーバー側だけで実行される
 export const getServerSideProps = async () => {
-  // console.log('getServerSideProps')
   const convertedEvents = []
 
-  // TODO: PrismaからEventsテーブルのデータ取得
+  // PrismaからEventsテーブルのデータ取得
   const events = await prisma.event.findMany({})
   for (const event of events) {
     // 開始時刻、終了時刻をUTCからJSTに変換する (ISO-8601形式)
@@ -34,9 +33,8 @@ export const getServerSideProps = async () => {
   }
 
   // 1ヶ月分のダミーデータ追加
-  // TODO: 現在の日時を取得
+  // 現在の日時を取得
   const today = dayjs(new Date())
-  // console.log(today)
   for (let additionalDay = 0; additionalDay <= 90; additionalDay++) {
     // 1日分のダミーデータ追加
     for (let hour = 5; hour <= 8; hour++) {
@@ -65,8 +63,6 @@ export const getServerSideProps = async () => {
 
 // サーバーとクライアントの両方で動くコード
 export default function EventsPage({ convertedEvents }: any) {
-  // console.log('Events Page', new Date().getTime())
-  // console.log(JSON.stringify({ convertedEvents }, null, 2))
   return (
     <>
       <MyCalendar events={convertedEvents} />
