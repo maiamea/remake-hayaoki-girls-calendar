@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 import { MyCalendar } from '@/components/Calendar/Calendar'
+import { Hear } from '@/components/Header'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -65,6 +66,7 @@ export const getServerSideProps = async () => {
 export default function EventsPage({ convertedEvents }: any) {
   return (
     <>
+      <Hear />
       <MyCalendar events={convertedEvents} />
     </>
   )

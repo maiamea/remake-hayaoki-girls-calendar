@@ -25,3 +25,23 @@ body {
     )
     rgb(var(--background-start-rgb));
 } */
+
+/* .fc-day-sat {
+  .fc-daygrid-day-top, .fc-scrollgrid-sync-inner .fc-col-header-cell-cushion, .fc-list-day-cushion {
+    color: $d-blue;
+  }
+} */
+
+/* 土曜日 */
+.fc-day-sat .fc-daygrid-day-top,
+.fc-day-sat .fc-scrollgrid-sync-inner .fc-col-header-cell-cushion,
+.fc-day-sat .fc-list-day-cushion {
+  color: blue; /* $d-blue の値に置き換え */
+}
+
+/* 日曜日 */
+.fc-day-sun .fc-daygrid-day-top,
+.fc-day-sun .fc-scrollgrid-sync-inner .fc-col-header-cell-cushion,
+.fc-day-sun .fc-list-day-cushion {
+  color: red; /* $d-red の値に置き換え */
+}
