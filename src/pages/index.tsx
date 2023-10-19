@@ -14,7 +14,8 @@ dayjs.tz.setDefault('Asia/Tokyo')
 const prisma = new PrismaClient()
 
 // サーバー側だけで実行される
-export const getServerSideProps = async () => {
+// NOTE: ブラウザからクエリを受け取る (URL中の「?以降」)
+export const getServerSideProps = async ({query}: any) => {
   const convertedEvents = []
 
   // PrismaからEventsテーブルのデータ取得
@@ -59,15 +60,15 @@ export const getServerSideProps = async () => {
     }
   }
 
-  return { props: { convertedEvents } }
+  return { props: { convertedEvents, initialView: query.view || 'listWeek' } }
 }
 
 // サーバーとクライアントの両方で動くコード
-export default function EventsPage({ convertedEvents }: any) {
+export default function EventsPage({ convertedEvents, initialView }: any) {
   return (
     <>
       <Hear />
-      <MyCalendar events={convertedEvents} />
+      <MyCalendar events={convertedEvents} initialView={initialView} />
     </>
   )
 }

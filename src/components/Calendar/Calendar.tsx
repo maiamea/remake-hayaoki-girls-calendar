@@ -10,6 +10,7 @@ import React from 'react'
 
 export const MyCalendar = (props: any) => {
   const events = props.events
+  const initialView = props.initialView 
 
   function onClick(info: any) {
     Router.push({
@@ -22,7 +23,7 @@ export const MyCalendar = (props: any) => {
     <>
       <FullCalendar
         plugins={[interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin]}
-        initialView="dayGridMonth"
+        initialView={initialView}
         headerToolbar={{
           start: 'today prev,next',
           center: 'title',
@@ -42,12 +43,11 @@ export const MyCalendar = (props: any) => {
         eventClick={onClick}
         contentHeight="auto"
         showNonCurrentDates={false}
-        buttonText={{list: '日'}}
+        buttonText={{list: 'リスト'}}
         dayCellContent={(e) => {
           e.dayNumberText = e.dayNumberText.replace('日', '');
           return { html: e.dayNumberText };
         }}
-        
       />
     </>
   )
