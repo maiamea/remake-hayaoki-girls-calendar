@@ -19,6 +19,22 @@ export const MyCalendar = (props: any) => {
     })
   }
 
+  // URLのクエリパラメータを更新する
+  const updateURL = (viewName: string) => {
+    // 現在開いているブラウザのフルURLを取得 (文字列)し、URL Obj に変換する
+    const newURL = new URL(window.location.href)
+    // クエリパラメータの設定: viewキーを追加
+    newURL.searchParams.set('view', viewName)
+    // ブラウザ履歴の更新: ブラウザのアドレスバーのURLを更新
+    window.history.pushState({}, '', newURL.toString())
+  }
+  
+  // FullCalendarのビューが変更されたときに現在のビューのタイプに基づいてURLのクエリパラメータを更新する
+  const handleViewChange = (info: any) => {
+    updateURL(info.view.type)
+  }
+
+
   return (
     <>
       <FullCalendar
@@ -48,6 +64,7 @@ export const MyCalendar = (props: any) => {
           e.dayNumberText = e.dayNumberText.replace('日', '');
           return { html: e.dayNumberText };
         }}
+        viewDidMount={handleViewChange}
       />
     </>
   )
