@@ -40,11 +40,14 @@ export const MyCalendar = (props: any) => {
   }
 
 
+  const initialDate = props.initialDate
+
   return (
     <>
       <FullCalendar
         plugins={[interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin]}
         initialView={initialView}
+        initialDate={initialDate}
         headerToolbar={{
           start: 'today prev,next',
           center: isDayGridMonthView ? 'title' : '',

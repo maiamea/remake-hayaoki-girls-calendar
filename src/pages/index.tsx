@@ -60,15 +60,17 @@ export const getServerSideProps = async ({query}: any) => {
     }
   }
 
-  return { props: { convertedEvents, initialView: query.view || 'listWeek' } }
+  const initialView = query.view || 'listWeek'
+  const initialDate = query.start || new Date().toISOString()
+  return { props: { convertedEvents, initialView, initialDate} }
 }
 
 // サーバーとクライアントの両方で動くコード
-export default function EventsPage({ convertedEvents, initialView }: any) {
+export default function EventsPage({ convertedEvents, initialView, initialDate }: any) {
   return (
     <>
       <Hear />
-      <MyCalendar events={convertedEvents} initialView={initialView} />
+      <MyCalendar events={convertedEvents} initialView={initialView} initialDate={initialDate} />
     </>
   )
 }

@@ -37,9 +37,11 @@ export default async function handler(
   res: NextApiResponse<Data>,
 ) {
   const data = req.body
+  const initialView = data.initialView
+  const initialDate = data.date
   // 参加人数をカウントアップする
   const countedUpParticipant = parseInt(data.participant, 10) + 1
   // DB更新
   await updateData(data, countedUpParticipant)
-  res.redirect(307, '/')
+  res.redirect(307, `/?start=${initialDate}&view=${initialView}`)
 }
