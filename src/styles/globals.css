@@ -45,3 +45,25 @@ body {
 .fc-day-sun .fc-list-day-cushion {
   color: red; /* $d-red の値に置き換え */
 }
+
+/* PC表示のデフォルトのスタイル */
+.fc .fc-toolbar-title {
+  font-size: 25px;
+}
+
+/* スマホディスプレイのスタイル */
+@media (max-width: 767px) {
+  .text-4xl { 
+    /* アプリタイトル */
+    font-size: 30px;
+  }
+}
+
+.fc .fc-list-day-side-text {
+  float: left;
+}
+
+.fc .fc-list-day-text {
+  float: right;
+  
+}

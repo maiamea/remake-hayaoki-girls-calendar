@@ -6,11 +6,12 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list';
 
 import Router from 'next/router'
-import React from 'react'
+import React, { useState } from 'react'
 
 export const MyCalendar = (props: any) => {
   const events = props.events
   const initialView = props.initialView 
+  const [isDayGridMonthView, setIsDayGridMonthView] = useState<boolean>(true)
 
   function onClick(info: any) {
     Router.push({
@@ -32,6 +33,7 @@ export const MyCalendar = (props: any) => {
   // FullCalendarのビューが変更されたときに現在のビューのタイプに基づいてURLのクエリパラメータを更新する
   const handleViewChange = (info: any) => {
     updateURL(info.view.type)
+    setIsDayGridMonthView(info.view.type === 'dayGridMonth')
   }
 
 
@@ -42,7 +44,7 @@ export const MyCalendar = (props: any) => {
         initialView={initialView}
         headerToolbar={{
           start: 'today prev,next',
-          center: 'title',
+          center: isDayGridMonthView ? 'title' : '',
           right: 'dayGridMonth,timeGridWeek,listWeek',
         }}
         slotMinTime={'04:00:00'}
