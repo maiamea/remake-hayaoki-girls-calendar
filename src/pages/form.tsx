@@ -4,6 +4,7 @@ import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 import 'dayjs/locale/ja'
 import { PrimaryButton } from '@/components/Button/PrimaryButton'
+import Link from 'next/link'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -26,6 +27,8 @@ export const getServerSideProps = async ({ query }: any) => {
     where: { startDateTime: query.start }, // ISO-8601形式の文字列 YYYY-MM-DDTHH:mm:ss+09:00
   })
 
+  const initialView = query.initialView || 'listWeek'
+
   // データがなければダミーデータを返す
   if (!event) {
     const dummyEndStr = dayjs(query.start).add(10, 'm').format()
@@ -36,7 +39,7 @@ export const getServerSideProps = async ({ query }: any) => {
       participantCount: 0,
       title: '', // フォーム画面に表示しないので空文字にしとく
     }
-    return { props: dummyProps }
+    return { props: { convertedEvent: dummyProps, initialView } }
   }
 
   // 開始時刻、終了時刻をUTCからJSTに変換する
@@ -50,10 +53,10 @@ export const getServerSideProps = async ({ query }: any) => {
     title: `${event.participantCount}人`,
   }
 
-  return { props: convertedEvent }
+  return { props: { convertedEvent, initialView } }
 }
 
-export default function Form(convertedEvent: FormPageProps) {
+export default function Form({ convertedEvent, initialView }: { convertedEvent: FormPageProps, initialView: string }) {
   const startStr = dayjs(convertedEvent.start).format('M月D日(ddd) HH:mm')
   const endTimeStr = dayjs(convertedEvent.end).format('HH:mm')
 
@@ -63,6 +66,13 @@ export default function Form(convertedEvent: FormPageProps) {
         <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
           <div className="p-4 sm:p-7">
             <div className="">
+              <div className='flex justify-end'>
+                <Link href={`/?view=${initialView}`}>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </Link>
+              </div>
               <form method="post" action="/api/count-up">
                 <div>
                   <h1 className="text-xl font-normal  text-center text-gray-600">

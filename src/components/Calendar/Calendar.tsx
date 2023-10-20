@@ -16,7 +16,10 @@ export const MyCalendar = (props: any) => {
   function onClick(info: any) {
     Router.push({
       pathname: '/form',
-      query: { start: info.event.start.toISOString() }, // ISO-8601形式の文字列 YYYY-MM-DDTHH:mm:ss+09:00
+      query: { 
+        start: info.event.start.toISOString(), // ISO-8601形式の文字列 YYYY-MM-DDTHH:mm:ss+09:00
+        initialView: info.view.type
+      }, 
     })
   }
 
