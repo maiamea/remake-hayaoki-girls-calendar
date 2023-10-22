@@ -20,16 +20,22 @@ export const getServerSideProps = async ({query}: any) => {
 
   // PrismaからEventsテーブルのデータ取得
   const events = await prisma.event.findMany({})
+  const queryStartObj = dayjs(query.start).tz()
+
   for (const event of events) {
     // 開始時刻、終了時刻をUTCからJSTに変換する (ISO-8601形式)
-    const start = dayjs(event.startDateTime).tz().format()
+    const startObj = dayjs(event.startDateTime).tz()
+    const start = startObj.format()
     const end = dayjs(event.endDateTime).tz().format()
+    const isSameObj = startObj.isSame(queryStartObj)
+
     const convertedEvent = {
       id: event.id,
       start: start,
       end: end,
       participantCount: event.participantCount,
-      title: `${event.participantCount}人`,
+      title: isSameObj ? `${event.participantCount}人 ★` : `${event.participantCount}人` 
+
     }
     convertedEvents.push(convertedEvent)
   }

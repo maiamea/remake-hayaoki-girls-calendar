@@ -10,16 +10,17 @@ import React, { useState } from 'react'
 
 export const MyCalendar = (props: any) => {
   const events = props.events
-  const initialView = props.initialView 
+  const initialView = props.initialView
+  const initialDate = props.initialDate
   const [isDayGridMonthView, setIsDayGridMonthView] = useState<boolean>(true)
 
   function onClick(info: any) {
     Router.push({
       pathname: '/form',
-      query: { 
+      query: {
         start: info.event.start.toISOString(), // ISO-8601形式の文字列 YYYY-MM-DDTHH:mm:ss+09:00
         initialView: info.view.type
-      }, 
+      },
     })
   }
 
@@ -32,15 +33,13 @@ export const MyCalendar = (props: any) => {
     // ブラウザ履歴の更新: ブラウザのアドレスバーのURLを更新
     window.history.pushState({}, '', newURL.toString())
   }
-  
+
   // FullCalendarのビューが変更されたときに現在のビューのタイプに基づいてURLのクエリパラメータを更新する
   const handleViewChange = (info: any) => {
     updateURL(info.view.type)
     setIsDayGridMonthView(info.view.type === 'dayGridMonth')
   }
 
-
-  const initialDate = props.initialDate
 
   return (
     <>
@@ -67,7 +66,7 @@ export const MyCalendar = (props: any) => {
         eventClick={onClick}
         contentHeight="auto"
         showNonCurrentDates={false}
-        buttonText={{list: 'リスト'}}
+        buttonText={{ list: 'リスト' }}
         dayCellContent={(e) => {
           e.dayNumberText = e.dayNumberText.replace('日', '');
           return { html: e.dayNumberText };

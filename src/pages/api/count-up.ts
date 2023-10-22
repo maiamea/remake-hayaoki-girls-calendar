@@ -39,9 +39,18 @@ export default async function handler(
   const data = req.body
   const initialView = data.initialView
   const initialDate = data.date
+
   // 参加人数をカウントアップする
   const countedUpParticipant = parseInt(data.participant, 10) + 1
   // DB更新
   await updateData(data, countedUpParticipant)
-  res.redirect(307, `/?start=${initialDate}&view=${initialView}`)
+
+  // URLエンコード
+  // NOTE: URLとして特別な意味を持つ記号(「+」や「:」など)を別の文字列に置き換える
+  const queryParamObj = new URLSearchParams({
+    start: initialDate,
+    view: initialView
+  })
+  const queryParamStr = queryParamObj.toString()
+  res.redirect(307, `/?${queryParamStr}`)
 }
