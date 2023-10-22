@@ -17,7 +17,7 @@ const prisma = new PrismaClient()
 // サーバー側だけで実行される
 // NOTE: ブラウザからクエリを受け取る (URL中の「?以降」)
 export const getServerSideProps = async ({ query, req }: any) => {
-  const cookies = req.headers.cookie
+  const cookies = req.headers.cookie || ''
   const parsedCookies = cookie.parse(cookies)
   const eventIds = JSON.parse(parsedCookies.eventIds) || []
   const convertedEvents = []
