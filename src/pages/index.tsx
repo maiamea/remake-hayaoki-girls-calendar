@@ -19,7 +19,7 @@ const prisma = new PrismaClient()
 export const getServerSideProps = async ({ query, req }: any) => {
   const cookies = req.headers.cookie || ''
   const parsedCookies = cookie.parse(cookies)
-  const eventIds = JSON.parse(parsedCookies.eventIds) || []
+  const eventIds = JSON.parse(parsedCookies.eventIds || '[]') || []
   const convertedEvents = []
 
   // PrismaからEventsテーブルのデータ取得

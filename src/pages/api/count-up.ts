@@ -63,7 +63,7 @@ export default async function handler(
   // Cookieを解析してeventIdsを取り出す
   const cookies = req.headers.cookie || ''
   const parsedCookies = cookie.parse(cookies)
-  const eventIds = JSON.parse(parsedCookies.eventIds) || []
+  const eventIds = JSON.parse(parsedCookies.eventIds || '[]') || []
   eventIds.push(eventId)
   const stringifiedEventIds = JSON.stringify(eventIds)
 
