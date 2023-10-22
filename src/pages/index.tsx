@@ -5,6 +5,7 @@ import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 import { MyCalendar } from '@/components/Calendar/Calendar'
 import { Hear } from '@/components/Header'
+import * as cookie from 'cookie'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -15,26 +16,28 @@ const prisma = new PrismaClient()
 
 // サーバー側だけで実行される
 // NOTE: ブラウザからクエリを受け取る (URL中の「?以降」)
-export const getServerSideProps = async ({query}: any) => {
+export const getServerSideProps = async ({query, req}: any) => {
+  const cookies = req.headers.cookie
+  const parsedCookies = cookie.parse(cookies)
+  const eventIds = JSON.parse(parsedCookies.eventIds) || []
   const convertedEvents = []
 
   // PrismaからEventsテーブルのデータ取得
   const events = await prisma.event.findMany({})
-  const queryStartObj = dayjs(query.start).tz()
 
   for (const event of events) {
     // 開始時刻、終了時刻をUTCからJSTに変換する (ISO-8601形式)
     const startObj = dayjs(event.startDateTime).tz()
     const start = startObj.format()
     const end = dayjs(event.endDateTime).tz().format()
-    const isSameObj = startObj.isSame(queryStartObj)
+    const isIncludeEventId = eventIds.includes(event.id)
 
     const convertedEvent = {
       id: event.id,
       start: start,
       end: end,
       participantCount: event.participantCount,
-      title: isSameObj ? `${event.participantCount}人 ★` : `${event.participantCount}人` 
+      title: isIncludeEventId ? `${event.participantCount}人 ★` : `${event.participantCount}人` 
 
     }
     convertedEvents.push(convertedEvent)

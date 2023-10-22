@@ -2,10 +2,14 @@
 import { PrismaClient } from '@prisma/client'
 import dayjs from 'dayjs'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import * as cookie from 'cookie'
 
 type Data = {
   data: string
 }
+
+// Cookie有効期限： 90日間
+const maxAge = 7776000
 
 // Prismaのインスタンスを作成
 const prisma = new PrismaClient()
@@ -17,18 +21,20 @@ async function updateData(data: any, numOfParticipant: number) {
   })
 
   if (event) {
-    await prisma.event.update({
+    const updatedEvent = await prisma.event.update({
       where: { id: event.id },
       data: { participantCount: numOfParticipant },
     })
+    return updatedEvent.id
   } else {
-    await prisma.event.create({
+    const createdEvent = await prisma.event.create({
       data: {
         startDateTime: data.date,
         endDateTime: dayjs(data.date).add(10, 'm').format(),
         participantCount: 1,
       },
     })
+    return createdEvent.id
   }
 }
 
@@ -36,6 +42,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
+  console.log({req})
   const data = req.body
   const initialView = data.initialView
   const initialDate = data.date
@@ -43,7 +50,7 @@ export default async function handler(
   // 参加人数をカウントアップする
   const countedUpParticipant = parseInt(data.participant, 10) + 1
   // DB更新
-  await updateData(data, countedUpParticipant)
+  const eventId = await updateData(data, countedUpParticipant)
 
   // URLエンコード
   // NOTE: URLとして特別な意味を持つ記号(「+」や「:」など)を別の文字列に置き換える
@@ -52,5 +59,16 @@ export default async function handler(
     view: initialView
   })
   const queryParamStr = queryParamObj.toString()
+
+  // Cookieを解析してeventIdsを取り出す
+  const cookies = req.headers.cookie || ''
+  const parsedCookies = cookie.parse(cookies)
+  const eventIds = JSON.parse(parsedCookies.eventIds) || []
+  eventIds.push(eventId)
+  const stringifiedEventIds = JSON.stringify(eventIds)
+
+  // eventのidをCookieにセットする
+  // NOTE: 全てのページでCookieを使用できるようにした
+  res.setHeader('Set-Cookie', `eventIds=${stringifiedEventIds}; Max-Age=${maxAge}; Path=/`);
   res.redirect(307, `/?${queryParamStr}`)
 }
