@@ -42,7 +42,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
-  console.log({ req })
   const data = req.body
   const initialView = data.initialView
   const initialDate = data.date

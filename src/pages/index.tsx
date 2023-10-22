@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 import { MyCalendar } from '@/components/Calendar/Calendar'
-import { Hear } from '@/components/Header'
+import { Header } from '@/components/Header'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -83,7 +83,7 @@ export default function EventsPage({
 }: any) {
   return (
     <>
-      <Hear />
+      <Header />
       <MyCalendar
         events={convertedEvents}
         initialView={initialView}

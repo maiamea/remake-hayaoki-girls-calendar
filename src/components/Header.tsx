@@ -1,4 +1,4 @@
-export const Hear = () => {
+export const Header = () => {
   return (
     <>
       <div className="bg-orange-300">
