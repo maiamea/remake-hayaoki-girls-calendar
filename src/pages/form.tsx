@@ -3,8 +3,8 @@ import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 import 'dayjs/locale/ja'
-import { PrimaryButton } from '@/components/Button/PrimaryButton'
 import Link from 'next/link'
+import { PrimaryButton } from '@/components/Button/PrimaryButton'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -40,7 +40,7 @@ export const getServerSideProps = async ({ query }: any) => {
       participantCount: 0,
       title: '', // フォーム画面に表示しないので空文字にしとく
     }
-    return { props: { convertedEvent: dummyProps, initialView,  initialDate} }
+    return { props: { convertedEvent: dummyProps, initialView, initialDate } }
   }
 
   // 開始時刻、終了時刻をUTCからJSTに変換する
@@ -57,7 +57,15 @@ export const getServerSideProps = async ({ query }: any) => {
   return { props: { convertedEvent, initialView, initialDate } }
 }
 
-export default function Form({ convertedEvent, initialView, initialDate }: { convertedEvent: FormPageProps, initialView: string, initialDate: string }) {
+export default function Form({
+  convertedEvent,
+  initialView,
+  initialDate,
+}: {
+  convertedEvent: FormPageProps
+  initialView: string
+  initialDate: string
+}) {
   const startStr = dayjs(convertedEvent.start).format('M月D日(ddd) HH:mm')
   const endTimeStr = dayjs(convertedEvent.end).format('HH:mm')
 
@@ -67,10 +75,21 @@ export default function Form({ convertedEvent, initialView, initialDate }: { con
         <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
           <div className="p-4 sm:p-7">
             <div className="">
-              <div className='flex justify-end'>
+              <div className="flex justify-end">
                 <Link href={`/?start=${initialDate}&view=${initialView}`}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </Link>
               </div>
@@ -91,11 +110,7 @@ export default function Form({ convertedEvent, initialView, initialDate }: { con
                   name="participant"
                   value={convertedEvent.participantCount}
                 />
-                <input
-                  type="hidden"
-                  name="initialView"
-                  value={initialView}
-                />
+                <input type="hidden" name="initialView" value={initialView} />
                 <div className="text-center">
                   <PrimaryButton type="submit">参加する</PrimaryButton>
                 </div>

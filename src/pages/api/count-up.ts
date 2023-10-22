@@ -1,8 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { PrismaClient } from '@prisma/client'
+import * as cookie from 'cookie'
 import dayjs from 'dayjs'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import * as cookie from 'cookie'
 
 type Data = {
   data: string
@@ -42,7 +42,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
-  console.log({req})
+  console.log({ req })
   const data = req.body
   const initialView = data.initialView
   const initialDate = data.date
@@ -56,7 +56,7 @@ export default async function handler(
   // NOTE: URLとして特別な意味を持つ記号(「+」や「:」など)を別の文字列に置き換える
   const queryParamObj = new URLSearchParams({
     start: initialDate,
-    view: initialView
+    view: initialView,
   })
   const queryParamStr = queryParamObj.toString()
 
@@ -69,6 +69,9 @@ export default async function handler(
 
   // eventのidをCookieにセットする
   // NOTE: 全てのページでCookieを使用できるようにした
-  res.setHeader('Set-Cookie', `eventIds=${stringifiedEventIds}; Max-Age=${maxAge}; Path=/`);
+  res.setHeader(
+    'Set-Cookie',
+    `eventIds=${stringifiedEventIds}; Max-Age=${maxAge}; Path=/`,
+  )
   res.redirect(307, `/?${queryParamStr}`)
 }

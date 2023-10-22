@@ -1,9 +1,9 @@
 import jaLocale from '@fullcalendar/core/locales/ja'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import listPlugin from '@fullcalendar/list'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import listPlugin from '@fullcalendar/list';
 
 import Router from 'next/router'
 import React, { useState } from 'react'
@@ -19,7 +19,7 @@ export const MyCalendar = (props: any) => {
       pathname: '/form',
       query: {
         start: info.event.start.toISOString(), // ISO-8601形式の文字列 YYYY-MM-DDTHH:mm:ss+09:00
-        initialView: info.view.type
+        initialView: info.view.type,
       },
     })
   }
@@ -39,7 +39,6 @@ export const MyCalendar = (props: any) => {
     updateURL(info.view.type)
     setIsDayGridMonthView(info.view.type === 'dayGridMonth')
   }
-
 
   return (
     <>
@@ -68,8 +67,8 @@ export const MyCalendar = (props: any) => {
         showNonCurrentDates={false}
         buttonText={{ list: 'リスト' }}
         dayCellContent={(e) => {
-          e.dayNumberText = e.dayNumberText.replace('日', '');
-          return { html: e.dayNumberText };
+          e.dayNumberText = e.dayNumberText.replace('日', '')
+          return { html: e.dayNumberText }
         }}
         viewDidMount={handleViewChange}
       />

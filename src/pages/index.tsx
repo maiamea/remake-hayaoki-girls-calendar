@@ -1,11 +1,11 @@
 // Prisma Clientをインポート
 import { PrismaClient } from '@prisma/client'
+import * as cookie from 'cookie'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 import { MyCalendar } from '@/components/Calendar/Calendar'
 import { Hear } from '@/components/Header'
-import * as cookie from 'cookie'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -16,7 +16,7 @@ const prisma = new PrismaClient()
 
 // サーバー側だけで実行される
 // NOTE: ブラウザからクエリを受け取る (URL中の「?以降」)
-export const getServerSideProps = async ({query, req}: any) => {
+export const getServerSideProps = async ({ query, req }: any) => {
   const cookies = req.headers.cookie
   const parsedCookies = cookie.parse(cookies)
   const eventIds = JSON.parse(parsedCookies.eventIds) || []
@@ -37,8 +37,9 @@ export const getServerSideProps = async ({query, req}: any) => {
       start: start,
       end: end,
       participantCount: event.participantCount,
-      title: isIncludeEventId ? `${event.participantCount}人 ★` : `${event.participantCount}人` 
-
+      title: isIncludeEventId
+        ? `${event.participantCount}人 ★`
+        : `${event.participantCount}人`,
     }
     convertedEvents.push(convertedEvent)
   }
@@ -71,15 +72,23 @@ export const getServerSideProps = async ({query, req}: any) => {
 
   const initialView = query.view || 'listWeek'
   const initialDate = query.start || new Date().toISOString()
-  return { props: { convertedEvents, initialView, initialDate} }
+  return { props: { convertedEvents, initialView, initialDate } }
 }
 
 // サーバーとクライアントの両方で動くコード
-export default function EventsPage({ convertedEvents, initialView, initialDate }: any) {
+export default function EventsPage({
+  convertedEvents,
+  initialView,
+  initialDate,
+}: any) {
   return (
     <>
       <Hear />
-      <MyCalendar events={convertedEvents} initialView={initialView} initialDate={initialDate} />
+      <MyCalendar
+        events={convertedEvents}
+        initialView={initialView}
+        initialDate={initialDate}
+      />
     </>
   )
 }
