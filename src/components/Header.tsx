@@ -14,10 +14,12 @@ export const Header = () => {
   return (
     <>
       <header className="relative flex justify-between items-center bg-orange-300">
-        <h1 className="pt-3 ml-3 mb-3 text-4xl font-extrabold text-gray-50">
-          hayaoki_girls <br className="md:hidden" />
-          カレンダー
-        </h1>
+        <Link href="/">
+          <h1 className="pt-3 ml-3 mb-3 text-4xl font-extrabold text-gray-50">
+            hayaoki_girls <br className="md:hidden" />
+            カレンダー
+          </h1>
+        </Link>
 
         {/* isOpenがtrueの時(ハンバーガーメニューが開いてる時)にのみオーバーレイを表示する */}
         {isOpen && (
@@ -30,8 +32,8 @@ export const Header = () => {
         <nav
           className={
             isOpen
-              ? 'z-50 bg-orange-50	 fixed top-0 right-0 bottom-0 left-15 h-screen flex flex-col'
-              : 'fixed right-[-100%] md:right-4' // ハンバーガーメニュー閉じてる時
+              ? 'fixed z-50 bg-orange-50 top-0 right-0 bottom-0 left-15 h-screen flex flex-col'
+              : 'mr-3 hidden md:block' // ハンバーガーメニュー閉じてる時、window sizeがmidinum以上なら表示する
           }
         >
           <ul
@@ -56,7 +58,9 @@ export const Header = () => {
 
         {/* ハンバーガーメニュー */}
         <button
-          className="z-50 space-y-1.5 md:hidden mr-3"
+          className={
+            isOpen ? 'z-50 space-y-1.5 mr-3' : 'z-50 space-y-1.5 md:hidden mr-3'
+          }
           onClick={handleMenuOpen}
         >
           <span
