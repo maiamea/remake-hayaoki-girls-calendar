@@ -19,6 +19,7 @@ export const Header = () => {
           カレンダー
         </h1>
 
+        {/* isOpenがtrueの時(ハンバーガーメニューが開いてる時)にのみオーバーレイを表示する */}
         {isOpen && (
           <div
             className="fixed inset-0 bg-black bg-opacity-50 z-40"
