@@ -41,7 +41,7 @@ export const MyCalendar = (props: any) => {
   }
 
   return (
-    <>
+    <div className='px-3'>
       <FullCalendar
         plugins={[interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin]}
         initialView={initialView}
@@ -72,6 +72,6 @@ export const MyCalendar = (props: any) => {
         }}
         viewDidMount={handleViewChange}
       />
-    </>
+    </div>
   )
 }

@@ -113,7 +113,7 @@ export default function AboutPage() {
             </ul>
           </div>
 
-          <h2 className="text-2xl	text-center">
+          <h2 className="text-2xl	text-center break-keep">
             hayaoki_girls カレンダーの役割
           </h2>
           <hr className="my-4 border-t border-orange-300 mx-auto" />
