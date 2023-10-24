@@ -1,90 +1,34 @@
 import Link from 'next/link'
-import { useState } from 'react'
 
 export const Header = () => {
-  const [isOpen, setOpen] = useState<boolean>(false)
-  const handleMenuOpen = () => {
-    setOpen(!isOpen)
-  }
-
-  const handleMenuClose = () => {
-    setOpen(false)
-  }
-
   return (
     <>
-      <header className="relative flex justify-between items-center bg-orange-300">
-        <Link href="/">
-          <h1 className="pt-3 ml-3 mb-3 text-4xl font-extrabold text-gray-50">
-            hayaoki_girls <br className="md:hidden" />
-            カレンダー
-          </h1>
+      <header className="relative flex justify-between items-center bg-orange-300 text-gray-50 font-extrabold py-3 pl-3 ">
+        <Link href="/" className="flex items-center">
+          {/* カレンダーアイコン */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-8 h-8"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
+            />
+          </svg>
+          <div className="ml-1 text-sm leading-tight">
+            <span className="flex flex-col justify-center">hayaoki_girls</span>
+            <span className="flex flex-col justify-center">カレンダー</span>
+          </div>
         </Link>
 
-        {/* isOpenがtrueの時(ハンバーガーメニューが開いてる時)にのみオーバーレイを表示する */}
-        {isOpen && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-40"
-            onClick={handleMenuOpen}
-          />
-        )}
-
-        <nav
-          className={
-            isOpen
-              ? 'fixed z-50 bg-orange-50 top-0 right-0 bottom-0 left-15 h-screen flex flex-col'
-              : 'mr-3 hidden md:block' // ハンバーガーメニュー閉じてる時、window sizeがmidinum以上なら表示する
-          }
-        >
-          <ul
-            className={
-              isOpen
-                ? 'flex h-screen justify-center items-center flex-col gap-6 text-xl p-3'
-                : 'block md:flex md:gap-8'
-            }
-          >
-            <li>
-              <Link onClick={handleMenuClose} href="/about">
-                hayaoki_girls カレンダーとは
-              </Link>
-            </li>
-            <li>
-              <Link onClick={handleMenuClose} href="/how-to-use">
-                使い方ガイド
-              </Link>
-            </li>
-          </ul>
-        </nav>
-
-        {/* ハンバーガーメニュー */}
-        <button
-          className={
-            isOpen ? 'z-50 space-y-1.5 mr-3' : 'z-50 space-y-1.5 md:hidden mr-3'
-          }
-          onClick={handleMenuOpen}
-        >
-          <span
-            className={
-              isOpen
-                ? 'block w-8 h-0.5 bg-gray-600 translate-y-0.5 rotate-45 duration-300'
-                : 'block w-8 h-0.5 bg-gray-600 duration-300'
-            }
-          />
-          <span
-            className={
-              isOpen
-                ? 'block opacity-0 duration-300'
-                : 'block w-8 h-0.5 bg-gray-600 duration-300'
-            }
-          />
-          <span
-            className={
-              isOpen
-                ? 'block w-8 h-0.5 bg-gray-600 -translate-y-1.5 -rotate-45 duration-300'
-                : 'block w-8 h-0.5 bg-gray-600 duration-300'
-            }
-          />
-        </button>
+        <Link className="mr-3" href="/about">
+          このサイトについて
+        </Link>
       </header>
       <hr className="h-px mt-0 mb-3 bg-gray-200" />
     </>

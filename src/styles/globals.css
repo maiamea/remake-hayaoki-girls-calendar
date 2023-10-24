@@ -2,36 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-} */
-
-/* .fc-day-sat {
-  .fc-daygrid-day-top, .fc-scrollgrid-sync-inner .fc-col-header-cell-cushion, .fc-list-day-cushion {
-    color: $d-blue;
-  }
-} */
-
 /* 土曜日 */
 .fc-day-sat .fc-daygrid-day-top,
 .fc-day-sat .fc-scrollgrid-sync-inner .fc-col-header-cell-cushion,
@@ -46,24 +16,10 @@ body {
   color: red; /* $d-red の値に置き換え */
 }
 
-/* PC表示のデフォルトのスタイル */
-.fc .fc-toolbar-title {
-  font-size: 25px;
-}
-
-/* スマホディスプレイのスタイル */
-@media (max-width: 767px) {
-  .text-4xl { 
-    /* アプリタイトル */
-    font-size: 30px;
-  }
-}
-
 .fc .fc-list-day-side-text {
   float: left;
 }
 
 .fc .fc-list-day-text {
   float: right;
-  
 }
