@@ -1,6 +1,9 @@
 import { Header } from '@/components/Header'
 
 export default function AboutPage() {
+  const hashtagLink =
+    'https://twitter.com/search?q=%23hayaoki_girls&src=hashtag_click&f=live'
+
   return (
     <>
       <Header />
@@ -9,9 +12,11 @@ export default function AboutPage() {
           <h2 className="text-2xl	text-center">hayaoki_girlsとは</h2>
           <hr className="my-4 border-t border-orange-300 mx-auto" />
           <div className="text-gray-500 mb-10">
-            <p>TECH PLAY女子部内での朝活を、hayaoki_girlsと呼んでいます。</p>
             <p>
-              2020年1月から有志でスタートし、2022年9月から実施場所をZoomからDiscordに移しています。
+              TECH PLAY女子部内での朝活を、hayaoki_girls と呼んでいます。
+              2020年1月から有志でスタートし、2022年9月から実施場所が Zoom から
+              Discord に移りました。 TECH PLAY女子部 Discord の hayaoki_girls
+              ボイスチャンネルで実施します。
             </p>
           </div>
 
@@ -74,8 +79,6 @@ export default function AboutPage() {
           <div className="text-gray-500 mb-10">
             <p>
               雑談タイムの終わりはだいたい「今日もよろしくお願いします〜」の挨拶で終わります。
-            </p>
-            <p>
               ミュートで各自好きなことやる時間では、Discordから退室して作業される方もいます。
             </p>
           </div>
@@ -84,17 +87,43 @@ export default function AboutPage() {
           <hr className="my-4 border-t border-orange-300 mx-auto" />
           <div className="text-gray-500 mb-5">
             <ul className="list-disc my-10">
-              <li>途中参加・途中退出自由</li>
-              <li>やることを宣言したり、やったことを報告する必要なし</li>
-              <li>参加できるときに参加すればOK</li>
-              <li>
+              <li className="font-bold">雑談だけ参加するのもOK</li>
+              <li className="font-bold">
+                参加できるときに参加すればOK（毎日参加しなくていい）
+              </li>
+              <li className="font-bold">
                 好きな時間帯に参加すればOK（5時〜9時までずっといなくていい）
               </li>
+              <li>途中参加・途中退出自由</li>
+              <li>やることを宣言したり、やったことを報告する必要なし</li>
               <li>
-                雑談に参加せず、布団の中から#hayaoki_girls
-                のハッシュタグつけて「おはよう」「起きた〜」ツイートするだけでもOK
+                Discordに現れなくても、布団の中から
+                <a
+                  className="text-blue-400"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={hashtagLink}
+                >
+                  {' '}
+                  #hayaoki_girls{' '}
+                </a>
+                のハッシュタグをつけて「おはよう」「起きた〜」と
+                X（旧Twitter）にポストするだけでもOK
               </li>
             </ul>
+          </div>
+
+          <h2 className="text-2xl	text-center">
+            hayaoki_girls カレンダーの役割
+          </h2>
+          <hr className="my-4 border-t border-orange-300 mx-auto" />
+          <div className="text-gray-500 mb-10">
+            <p>
+              hayaoki_girls
+              カレンダーを見ることで、参加予定人数（確定ではない）を事前に把握できます。
+              なので、たとえ当日、自分以外の参加者がいなくても「カレンダーでこの時間帯の参加予定人数1人だったし仕方ない」と思えるし、
+              初めて参加される方であれば、参加人数が多めの日を狙って参加日を決めやすくなります。
+            </p>
           </div>
         </div>
       </div>
