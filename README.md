@@ -1,3 +1,10 @@
+## hayaoki_girls カレンダー
+hayaoki_girlsに参加する予定人数を確認できるカレンダーアプリです。
+
+## アーキテクチャ
+
+![hayaoki_girls カレンダーのアーキテクチャ図](docs/231025_hayaoki_girls_calendar.drawio.svg)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
