@@ -1,7 +1,7 @@
 ## hayaoki_girls カレンダー
 hayaoki_girlsに参加する予定人数を確認できるカレンダーアプリです。
 
-## アーキテクチャ
+## アーキテクチャ図
 
 ![hayaoki_girls カレンダーのアーキテクチャ図](docs/231025_hayaoki_girls_calendar.drawio.svg)
 
