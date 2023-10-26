@@ -25,6 +25,7 @@ export const getServerSideProps = async ({ query, req }: any) => {
 
   // PrismaからEventsテーブルのデータ取得
   const events = await prisma.event.findMany({})
+  console.log(JSON.stringify(events))
 
   for (const event of events) {
     // 開始時刻、終了時刻をUTCからJSTに変換する (ISO-8601形式)
@@ -47,7 +48,7 @@ export const getServerSideProps = async ({ query, req }: any) => {
 
   // 1ヶ月分のダミーデータ追加
   // 現在の日時を取得
-  const today = dayjs(new Date())
+  const today = dayjs(new Date()).tz()
   for (let additionalDay = 0; additionalDay <= 90; additionalDay++) {
     // 1日分のダミーデータ追加
     for (let hour = 5; hour <= 8; hour++) {
@@ -71,6 +72,7 @@ export const getServerSideProps = async ({ query, req }: any) => {
     }
   }
 
+  console.log(JSON.stringify(convertedEvents))
   const initialView = query.view || 'listWeek'
   const initialDate = query.start || new Date().toISOString()
   return { props: { convertedEvents, initialView, initialDate } }
