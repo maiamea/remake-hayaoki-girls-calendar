@@ -4,7 +4,7 @@ export const Header = () => {
   return (
     <>
       <header className="relative flex justify-between items-center bg-orange-300 text-gray-50 font-extrabold py-3 pl-3 ">
-        <Link href="/" className="flex items-center">
+        <a href="/" className="flex items-center">
           {/* カレンダーアイコン */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +24,7 @@ export const Header = () => {
             <span className="flex flex-col justify-center">hayaoki_girls</span>
             <span className="flex flex-col justify-center">カレンダー</span>
           </div>
-        </Link>
+        </a>
 
         <Link className="mr-3" href="/about">
           このサイトについて
