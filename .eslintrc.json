@@ -13,6 +13,7 @@
     "react/react-in-jsx-scope": "off",
     "import/order": [2, { "alphabetize": { "order": "asc" } }],
     "@typescript-eslint/no-explicit-any": "warn",
+    "@next/next/no-html-link-for-pages": "warn",
     "prettier/prettier": [
       "warn",
       {
