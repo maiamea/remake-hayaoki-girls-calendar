@@ -51,12 +51,26 @@ async function getTomorrowData() {
       }
     },
   });
-  console.log({ data });
 
   // データを返す
   return data;
 }
 
+
+// 取得したデータを元にメッセージを作成する関数
+async function makeMessage(data: any) {
+  const lines = [];
+  for (const obj of data) {
+    console.log({ obj })
+    const startTime = dayjs(obj.startDateTime).tz().format('HH:mm')
+    const endTime = dayjs(obj.endDateTime).tz().format('HH:mm')
+    const participantCount = obj.participantCount
+    lines.push(`【${startTime} ~ ${endTime}】 ${participantCount}人`)
+  }
+  const joinedLines = lines.join('\n')
+  const message = `明日の参加予定人数です！\n${joinedLines}`
+  return message
+}
 
 
 export default async function handler(
@@ -72,6 +86,9 @@ export default async function handler(
     return res.status(404).json({ message: 'No data found for tomorrow' });
   }
 
+  // 取得したデータを元にメッセージを作成
+  const message = await makeMessage(data)
+
 
   // Discordの特定のチャンネルにメッセージを送信する処理
   // このAPI(/api/postToDiscord)を呼び出すことで、Discordの特定のチャンネルにメッセージを送信できるようにする
@@ -82,11 +99,10 @@ export default async function handler(
     return res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 
-  // Discordにデータを投稿
+  // Discordにメッセージを投稿
   try {
     await axios.post(discordWebhookUrl, {
-      // content: `Data for tomorrow: ${JSON.stringify(dataForTomorrow)}`,
-      content: `Data for tomorrow: ${JSON.stringify(data)}`,
+      content: `${message}`,
     })
     res.status(200).json({ success: true, message: 'Data posted to Discord successfully' })
   } catch (error) {
