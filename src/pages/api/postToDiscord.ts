@@ -74,6 +74,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>,
 ) {
+  console.log('postToDiscord API called')
+
   // 翌日のデータを取得
   const data = await getTomorrowData()
 
@@ -87,10 +89,10 @@ export default async function handler(
 
   // Discordの特定のチャンネルにメッセージを送信する処理
   // このAPI(/api/postToDiscord)を呼び出すことで、Discordの特定のチャンネルにメッセージを送信できるようにする
-  // POSTメソッドのみ許可
-  if (req.method !== 'POST') {
+  // GETメソッドのみ許可
+  if (req.method !== 'GET') {
     // 許可されていないメソッドの場合の処理
-    res.setHeader('Allow', ['POST'])
+    res.setHeader('Allow', ['GET'])
     return res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 
