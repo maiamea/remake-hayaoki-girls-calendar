@@ -4,6 +4,9 @@ export function middleware(req: NextRequest) {
   const url = req.nextUrl
   if (!url.pathname.startsWith('/')) return
 
+  // Cron job からのリクエストは許可 (Basic認証なしで実行できる)
+  if (url.pathname.startsWith('/api/postToDiscord')) return NextResponse.next()
+
   const basicAuth = req.headers.get('authorization')
 
   if (basicAuth) {
